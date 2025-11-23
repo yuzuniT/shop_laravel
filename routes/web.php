@@ -3,10 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ContactController;
+use App\Http\Middleware\CheckCartNotEmpty;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/',[HomeController::class, ('index')])
+    ->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -30,3 +33,36 @@ Route::middleware(['auth'])->group(function () {
         )
         ->name('two-factor.show');
 });
+
+Route::prefix('cart')->group(function () {
+
+    // カートが空のときに表示するページ
+    Route::get('/empty',[CartController::class,'empty'])
+        ->name('cart.empty');
+
+    // カートの中身を見るページ
+    Route::middleware('cart.not-empty')->group(function () {
+
+        Route::get('/',[CartController::class, 'index'])
+            ->name('cart.index');
+
+        Route::get('delivery_form',[CheckoutController::class, 'delivery_form'])
+            ->name('checkout.delivery_form');
+
+        Route::get('/confirm',[CheckoutController::class, 'confirm'])
+            ->name('checkout.confirm');
+
+        Route::get('/complete',[CheckoutController::class,'complete'])
+            ->name('checkout.complete');
+    });
+});
+
+
+Route::get('contact', [ContactController::class,'create'])
+    ->name('contact.create');
+
+Route::post('contact',[ContactController::class, 'store'])
+    ->name('contact.store');
+
+Route::get('contact_confirm',[ContactController::class, 'confirm'])
+    ->name('contact.confirm');
