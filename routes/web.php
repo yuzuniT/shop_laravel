@@ -3,13 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
 use App\Http\Middleware\CheckCartNotEmpty;
 
-Route::get('/',[HomeController::class, ('index')])
-    ->name('home');
+Route::get('/',[ProductController::class, 'index'])
+    ->name('products.index');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -57,6 +57,8 @@ Route::prefix('cart')->group(function () {
     });
 });
 
+Route::get('/products/{product}',[ProductController::class,'show'])
+    ->name('products.show');
 
 Route::get('contact', [ContactController::class,'create'])
     ->name('contact.create');

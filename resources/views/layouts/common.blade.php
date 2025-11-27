@@ -12,8 +12,8 @@
 <header class="w-full bg-white shadow">
     <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-4">
 
-        <a href="{{ route('home') }}" class="flex items-center">
-            <img src={{asset("img/logo/SoundSpace.png")}} class="h-10">
+        <a href="{{ route('products.index') }}" class="flex items-center">
+            <img src={{asset("img/logo/SoundSpace.png")}} class="w-50 h-auto">
         </a>
 
         <div class="flex-1 px-6">
@@ -45,11 +45,11 @@
 
             <!--カートを見る-->
             <a href="{{ route('cart.index') }}">
-                <img src={{asset("img/main_buttons/cart.png")}} class="h-8 hover:opacity-70">
+                <img src={{asset("img/main_buttons/cart.png")}} class="w-18 h-auto hover:opacity-70">
             </a>
             <!--お問い合わせ-->
             <a href="{{ route('contact.create') }}">
-                <img src={{asset("img/main_buttons/question.png")}} class="h-8 hover:opacity-70">
+                <img src={{asset("img/main_buttons/question.png")}} class="w-18 h-auto hover:opacity-70">
             </a>
             <!--ログアウト-->
 {{--ディレクティブで記述する

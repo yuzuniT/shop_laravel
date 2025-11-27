@@ -12,7 +12,7 @@
                 ご利用をお待ちしております。
                 <br>
                 <br>
-                <a class="text-blue-500 hover:text-blue-700" href="{{ route('home') }}">トップページはこちら</a>
+                <a class="text-blue-500 hover:text-blue-700" href="{{ route('products.index') }}">トップページはこちら</a>
 
         </x-message-box>
 
