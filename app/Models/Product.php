@@ -25,4 +25,19 @@ class Product extends Model
         
         return asset("img/products/placeholder.png");
     }
+
+    public function scopeSearch($query, $keyword)
+    {
+        if (!empty($keyword))
+        {
+            // name と description の両方を検索
+            $query->where(function($q) use ($keyword)
+            {
+                $q->where('product_name','like',"%{$keyword}%")
+                ->orWhere('description','like',"%{$keyword}%");
+            });
+        }
+
+        return $query;
+    }
 }

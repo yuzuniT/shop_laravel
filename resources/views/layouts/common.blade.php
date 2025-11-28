@@ -18,11 +18,11 @@
 
         <div class="flex-1 px-6">
 
-            <form action="index.php" method="GET" class="flex">
-                <input id="header_search_input" type="search" name="search"  placeholder="商品を検索" 
-                 class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300">
+            <form action="{{ route('products.index') }}" method="GET" class="flex">
+                <input type="search" name="search"  value="{{ request('search') }}" placeholder="商品を検索"
+                class="w-full min-w-[100px] border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300">
                 <button type="submit"
-                 class="bg-blue-500 text-white whitespace-nowrap px-4 rounded-r-md hover:bg-blue-600">検索</button>
+                class="bg-blue-500 text-white whitespace-nowrap px-4 rounded-r-md hover:bg-blue-600">検索</button>
             </form>
 
         </div>
