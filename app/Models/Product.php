@@ -16,14 +16,12 @@ class Product extends Model
     
     public function getImageUrlAttribute()
     {
-        $imagePath="img/products/{$this->id}.jpg";
+        $file=public_path("img/products/{$this->id}.jpg");
 
-        if (file_exists(public_path($imagePath)))
-        {
-            return asset($imagePath);
-        }
-        
-        return asset("img/products/placeholder.png");
+        return file_exists($file)
+        ? asset("img/products/{$this->id}.jpg")
+        : asset("img/products/placeholder.png");
+
     }
 
     public function scopeSearch($query, $keyword)

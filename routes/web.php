@@ -40,6 +40,16 @@ Route::prefix('cart')->group(function () {
     Route::get('/empty',[CartController::class,'empty'])
         ->name('cart.empty');
 
+    // カートに商品を追加する
+    Route::POST('/add',[CartController::class,'add'])
+        ->name('cart.add');
+
+    Route::POST('/update',[CartController::class, 'update'])
+        ->name('cart.update');
+
+    Route::POST('/delete',[CartController::class,'delete'])
+        ->name('cart.delete');
+
     // カートの中身を見るページ
     Route::middleware('cart.not-empty')->group(function () {
 
