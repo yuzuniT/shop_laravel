@@ -7,6 +7,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
 use App\Http\Middleware\CheckCartNotEmpty;
+use App\Livewire\RegisterComponent;
+use App\Livewire\LoginComponent;
 
 Route::get('/',[ProductController::class, 'index'])
     ->name('products.index');
@@ -78,3 +80,18 @@ Route::post('contact',[ContactController::class, 'store'])
 
 Route::get('contact_confirm',[ContactController::class, 'confirm'])
     ->name('contact.confirm');
+
+Route::get('/register',function(){
+    return view('register');
+});
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login',function () {
+        return view('login');
+    })
+        ->name('login');
+});
+
+Route::get('/login-component', LoginComponent::class);
+
+Route::get('/register-component', RegisterComponent::class);

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -20,9 +21,16 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'family_name',
+        'last_name',
+        'family_name_kana',
+        'last_name_kana',
         'email',
         'password',
+        'postal_code',
+        'address',
+        'phone_number',
+        'is_deleted',
     ];
 
     /**
@@ -55,10 +63,14 @@ class User extends Authenticatable
      */
     public function initials(): string
     {
-        return Str::of($this->name)
-            ->explode(' ')
-            ->take(2)
-            ->map(fn ($word) => Str::substr($word, 0, 1))
-            ->implode('');
+        return Str::substr($this->family_name, 0, 1)
+             . Str::substr($this->last_name, 0, 1);
+    }
+
+    public function fullName(): Attribute
+    {
+        return Attribute::get(
+            fn () => ($this->family_name ?? '') . ' ' . ($this->last_name ?? ''),
+        );
     }
 }

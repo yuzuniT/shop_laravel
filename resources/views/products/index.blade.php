@@ -32,11 +32,16 @@
                 </div>
 
                 <div class="flex justify-around">
+                    <form action="{{ route('cart.add') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}"">
+                        <input type="hidden" name="quantity" value="1">
 
-                    <a href="{{ route('products.show', $product->id) }}"
-                        class="inline-block bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600">
-                        購入する
-                    </a>
+                        <button type="submit"
+                            class="inline-block bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 cursor-pointer">
+                            購入する
+                        </button>
+                    </form>
 
                     <a href="{{ route('products.show', $product->id) }}"
                         class="inline-block bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-600">
