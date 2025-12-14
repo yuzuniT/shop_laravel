@@ -73,4 +73,16 @@ class User extends Authenticatable
             fn () => ($this->family_name ?? '') . ' ' . ($this->last_name ?? ''),
         );
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /*
+    public function deliveryInfos()
+    {
+        return $this->hasMany(DeliveryInfo::class);
+    }
+    */
 }

@@ -6,6 +6,7 @@ use Livewire\Volt\Volt;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Middleware\CheckCartNotEmpty;
 use App\Livewire\RegisterComponent;
 use App\Livewire\LoginComponent;
@@ -52,20 +53,24 @@ Route::prefix('cart')->group(function () {
     Route::POST('/delete',[CartController::class,'delete'])
         ->name('cart.delete');
 
+    Route::get('/complete',[CheckoutController::class,'complete']) // 完了画面の表示はセッション削除のあと 
+        ->name('checkout.complete');
+
     // カートの中身を見るページ
     Route::middleware('cart.not-empty')->group(function () {
 
         Route::get('/',[CartController::class, 'index'])
             ->name('cart.index');
 
-        Route::get('delivery_form',[CheckoutController::class, 'delivery_form'])
+        Route::get('/delivery_form',[CheckoutController::class, 'delivery_form'])
             ->name('checkout.delivery_form');
 
-        Route::get('/confirm',[CheckoutController::class, 'confirm'])
+        Route::post('/confirm',[CheckoutController::class, 'confirm'])
             ->name('checkout.confirm');
 
-        Route::get('/complete',[CheckoutController::class,'complete'])
-            ->name('checkout.complete');
+        Route::post('/store',[CheckoutController::class, 'store'])
+            ->name('checkout.store');
+
     });
 });
 
