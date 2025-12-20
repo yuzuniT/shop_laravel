@@ -25,7 +25,7 @@ return new class extends Migration
 
             $table->foreign('category_id')
                 ->references('id')->on('categories')
-                ->nullOnDelete();
+                ->nullOnDelete(); // カテゴリーIDが削除された時、商品テーブル内ではnullとなる
         });
     }
 
