@@ -10,6 +10,8 @@ use App\Models\order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Http\Requests\DeliveryFormRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmation;
 
 
 class CheckoutController extends Controller
@@ -105,8 +107,12 @@ class CheckoutController extends Controller
 
                 DB::commit();
 
+                // メール送信
+                Mail::to($order->email)->queue(new OrderConfirmation($order));
+
                 // 注文完了画面へリダイレクト
                 return redirect()->route('checkout.complete')
+                    ->with('order_completed',true)
                     ->with('order_id', $order->id);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -118,8 +124,14 @@ class CheckoutController extends Controller
     }
 
     // 注文完了画面を表示
-    public function complete()
+    public function complete(Request $request)
     {
+        // 'order_completed'フラグがない場合、不正なアクセスとみなしリダイレクト
+        if (!$request->session()->has('order_completed')) {
+            return redirect()->route('products.index')
+                ->with('error','不正なアクセスです。');
+        }
+
         // 注文IDがセッションに残っていれば取得し、ビューに渡す
         $orderId = session('order_id', null);
 

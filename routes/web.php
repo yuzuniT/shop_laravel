@@ -10,6 +10,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Middleware\CheckCartNotEmpty;
 use App\Livewire\RegisterComponent;
 use App\Livewire\LoginComponent;
+use Illuminate\Http\Request;
 
 Route::get('/',[ProductController::class, 'index'])
     ->name('products.index');
@@ -53,14 +54,20 @@ Route::prefix('cart')->group(function () {
     Route::POST('/delete',[CartController::class,'delete'])
         ->name('cart.delete');
 
-    Route::get('/complete',[CheckoutController::class,'complete']) // 完了画面の表示はセッション削除のあと 
-        ->name('checkout.complete');
-
     // カートの中身を見るページ
     Route::middleware('cart.not-empty')->group(function () {
 
         Route::get('/',[CartController::class, 'index'])
             ->name('cart.index');
+    });
+});
+
+Route::prefix('checkout')->group(function () {
+
+    Route::get('/complete',[CheckoutController::class,'complete']) // 完了画面の表示はセッション削除のあと 
+        ->name('checkout.complete');
+    
+    Route::middleware('cart.not-empty')->group(function () {
 
         Route::get('/delivery_form',[CheckoutController::class, 'delivery_form'])
             ->name('checkout.delivery_form');
@@ -70,25 +77,33 @@ Route::prefix('cart')->group(function () {
 
         Route::post('/store',[CheckoutController::class, 'store'])
             ->name('checkout.store');
-
     });
 });
 
 Route::get('/products/{product}',[ProductController::class,'show'])
     ->name('products.show');
 
-Route::get('contact', [ContactController::class,'create'])
+
+Route::prefix('contact')->group(function() {
+
+Route::get('/', [ContactController::class,'create'])
     ->name('contact.create');
 
-Route::post('contact',[ContactController::class, 'store'])
+Route::post('/',[ContactController::class, 'store'])
     ->name('contact.store');
 
-Route::get('contact_confirm',[ContactController::class, 'confirm'])
+Route::post('/confirm',[ContactController::class, 'confirm'])
     ->name('contact.confirm');
+
+Route::get('/complete',[ContactController::class, 'complete'])
+    ->name('contact.complete');
+});
+
 
 Route::get('/register',function(){
     return view('register');
-});
+})
+    ->name('register');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login',function () {
@@ -96,6 +111,14 @@ Route::middleware('guest')->group(function () {
     })
         ->name('login');
 });
+
+Route::post('/logout', function (Request $request) {
+    auth()->guard('web')->logout();
+    $request->session()->invalidate(); // セッションを無効化
+    $request->session()->regenerateToken(); // CSRFトークンを再生成
+    return redirect('/')
+        ->with('success','ログアウトしました。またのご利用をお待ちしております。');
+})->name('logout');
 
 Route::get('/login-component', LoginComponent::class);
 

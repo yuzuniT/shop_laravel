@@ -2,10 +2,8 @@
 
 @section('title', 'ご注文完了')
 
-@section('content_title', 'ご注文が完了しました')
-
 @section('content')
-<div class="max-wo-xl mx-auto py-12 text-center bg-white p-8 rounded-xl shadow-lg">
+<div class="max-w-xl mx-auto py-12 text-center bg-white p-8 rounded-xl shadow-lg">
 
     {{-- 完了メッセージ --}}
     <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-green-500 mx-auto mb-6" viewBox="0 0 20 20" fill="currentColor">
@@ -33,7 +31,7 @@
     @else
         {{-- orderIdがセッションに残っていない場合の代替メッセージ --}}
         <p class="text-red-500 mb-10">
-            注文番号を取得できませんでしたが、ご注文は確定しています。
+            注文番号を取得できませんでしたが、ご注文は確定しています。<br>
             メールをご確認ください。
         </p>
     @endif

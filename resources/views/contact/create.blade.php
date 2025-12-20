@@ -7,7 +7,7 @@
 @section('content')
     {{--お問い合わせフォーム--}}
 
-    <form action={{ route('contact.store') }} method="post" class="space-y-6">
+    <form action={{ route('contact.confirm') }} method="post" class="space-y-6">
 
         @csrf
 
@@ -97,6 +97,21 @@
             @enderror
         </div>
 
+        <!-- 件名 -->
+        <div>
+            <label for="contact_title" class="block font-medium text-gray-700 mb-1">
+                件名 <span class="text-red-500">（必須）</span>
+            </label>
+            <input type="text" name="contact_title" id="contact_title"
+                    class="w-full border rounded-md px-3 py-2 bg-white
+                    @error('contact_title') border-red-500 @enderror
+                    {{-- focus:outline-none focus:ring focus:ring-blue-300 --}}"
+                    value="{{ old('contact_title') }}" placeholder="件名を入力してください" required>
+            @error('contact_title')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
         <!-- メッセージ -->
         <div>
             <label for="message" class="block font-medium text-gray-700 mb-1">
@@ -115,7 +130,7 @@
         <!-- 送信ボタン -->
         <div class="text-right">
             <button type="submit" 
-            class="bg-blue-600 text-white rounded-md px-6 py-2
+            class="bg-blue-600 text-white rounded-md px-6 py-2 cursor-pointer
             hover:bg-blue-700 transition">次へ進む</button>
         </div>
     </form>

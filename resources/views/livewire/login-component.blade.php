@@ -17,11 +17,20 @@
         </div>
 
         <div class="flex justify-end">
-            <button class="bg-green-600 text-white px-4 py-2 rounded">
+            <button class="bg-green-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-green-700">
                 ログイン
             </button>
         </div>
     </form>
 
-    
+    <hr class="my-8 border-gray-200">
+
+    <div class="text-center text-sm text-gray-600">
+        会員登録はお済みですか？ <br>
+        まだの場合は
+        <a href="{{ route('register') }}" class="text-blue-600 font-bold hover:underline">
+            こちらから新規会員登録
+        </a>
+        をお願いします。
+    </div>
 </div>

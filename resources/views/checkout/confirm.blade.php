@@ -86,7 +86,10 @@
                         <div class="border-t my-4 pt-4"></div>
 
                         <div class="flex justify-between text-3xl font-extrabold text-blue-700">
-                            <span>合計（税込）</span>
+                            <div class="flex items-end">
+                                <span>合計</span>
+                                <span class="text-lg">(税込)</span>
+                            </div>
                             <span>¥{{ number_format($checkoutData['total_amount']) }}</span>
                         </div>
                     </div>
