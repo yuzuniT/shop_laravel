@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\CartService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\order;
+use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Http\Requests\DeliveryFormRequest;

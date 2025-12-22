@@ -11,14 +11,14 @@
     <div class="flex flex-col md:flex-row gap-8 bg-white round-xl shadow">
         <div class="flex-1">
             @foreach($cart as $item)
-                <div class="flex items-center gap-4 border-b py-4">
+                <div class="flex flex-col md:flex-row items-center gap-4 border-b py-4">
                     {{-- 商品画像 --}}
                     <img src="{{$item['image_url'] ?? asset('img/products/placeholder.png')}}"
                         alt="{{ $item['product_name']}}"
                         class="w-28 h-28 object-cover rounded">
 
                     {{-- 商品情報 --}}
-                    <div class="flex-1">
+                    <div class="flex-1 px-4">
                         <div class="font-semibold text-lg">{{ $item['product_name'] }}</div>
                         <div class="text-gray-600">¥{{ number_format($item['price'])}}</div>
                     </div>

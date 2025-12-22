@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //ミドルウェアの登録
         $middleware->alias(['cart.not-empty'=>CheckCartNotEmpty::class]);
         $middleware->redirectUsersTo(fn (Request $request) => route('products.index'));
+        $middleware->trustProxies(at: '*'); // 全てのプロキシを信頼（開発用）
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
