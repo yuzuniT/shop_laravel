@@ -71,18 +71,35 @@
     </div>
 
     {{-- 送信・戻るボタン --}}
-    <form action="{{ route('contact.store') }}" method="POST">
+    <form action="{{ route('contact.store') }}" method="POST"
+        x-data="{ isSubmitting: false }"
+        @submit="isSubmitting = true">
         @csrf
 
         <div class="flex flex-col md:flex-row items-center justify-center gap-5">
             <button type="submit" name="back" value="true"
-                class="w-full md:w-40 bg-gray-200 text-gray-700 font-bold py-3 rounded-md cursor-pointer hover:bg-gray-300 transition duration-200">
+                    :disabled="isSubmitting"
+                    :class="{ 'opacity-50 cursor-not-allowed': isSubmitting }"
+                    class="w-full md:w-40 bg-gray-200 text-gray-700 font-bold py-3 rounded-md cursor-pointer hover:bg-gray-300 transition duration-200">
                 修正する
             </button>
 
             <button type="submit"
-                class="w-full md:w-64 bg-blue-600 text-white font-bold py-3 rounded-md cursor-pointer hover:bg-blue-700 shadow-md transition duration-200">
-                この内容で送信する
+                    :disabled="isSubmitting"
+                    :class="{ 'opacity-50 cursor-not-allowed': isSubmitting }"
+                    class="w-full md:w-64 bg-blue-600 text-white font-bold py-3 rounded-md cursor-pointer hover:bg-blue-700 shadow-md transition duration-200 flex justify-center items-center">
+                
+                {{-- 通常時の表示 --}}
+                <span x-show="!isSubmitting">この内容で送信する</span>
+
+                {{-- 送信中の表示 --}}
+                <span x-show="isSubmitting" style="display: none;" class="flex items-center">
+                    <svg class="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    送信中...
+                </span>
             </button>
         </div>
     </form>

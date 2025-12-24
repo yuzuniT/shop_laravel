@@ -8,7 +8,9 @@
     <h1 class="text-3xl font-bold mb-8">ご注文内容の確認</h1>
 
     {{-- 注文確定フォーム --}}
-    <form method="POST" action="{{ route('checkout.store') }}">
+    <form method="POST" action="{{ route('checkout.store') }}" 
+        x-data="{ isSubmitting: false }" 
+        @submit="isSubmitting = true">
 
         @csrf
 
@@ -99,14 +101,29 @@
                     <div class="mt-8 space-y-3">
                         {{-- 注文確定ボタン --}}
                         <button type="submit"
-                            class="w-full px-6 py-4 bg-red-600 text-white text-xl fon-bold rounded-lg cursor-pointer
-                                hover:bg-red-700 transition duration-150 shadow-md">
-                            注文を確定する
+                            {{-- 送信中はボタンを無効化し、見た目を変える --}}
+                            :disabled="isSubmitting"
+                            :class="{ 'opacity-50 cursor-not-allowed': isSubmitting }"
+                            class="w-full px-6 py-4 bg-red-600 text-white text-xl font-bold rounded-lg 
+                                hover:bg-red-700 transition duration-150 shadow-md flex justify-center items-center">
+                            
+                            {{-- 通常時の表示 --}}
+                            <span x-show="!isSubmitting">注文を確定する</span>
+
+                            {{-- 送信中の表示（スピナー付き） --}}
+                            <span x-show="isSubmitting" style="display: none;" class="flex items-center">
+                                <svg class="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                注文を処理中...
+                            </span>
                         </button>
 
                         {{-- 戻るボタン --}}
                         <a href="{{ route('checkout.delivery_form') }}"
-                            class="w-full inline-block text-center px-6 py-2 border border-gray-300 rounded-lg
+                        x-show="!isSubmitting"
+                        class="w-full inline-block text-center px-6 py-2 border border-gray-300 rounded-lg
                                 text-gray-600 hover:bg-gray-100 transition duration-150">
                             配送先情報を修正する
                         </a>
