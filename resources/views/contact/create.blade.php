@@ -23,7 +23,7 @@
                         class="w-full border rounded-md px-3 py-2 bg-white
                         @error('family_name') border-red-500 @enderror
                         {{-- focus:outline-none focus:ring focus:ring-blue-300 --}}"
-                        value="{{ old('family_name')}}" placeholder="山田" required>
+                        value="{{ old('family_name', $user->family_name ?? '') }}" placeholder="山田" required>
                 @error('family_name')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
@@ -38,7 +38,7 @@
                         class="w-full border rounded-md px-3 py-2 bg-white
                         @error('last_name') border-red-500 @enderror
                         {{-- focus:outline-none focus:ring focus:ring-blue-300 --}}"
-                        value="{{ old('last_name')}}" placeholder="太郎" required>
+                        value="{{ old('last_name', $user->last_name ?? '') }}" placeholder="太郎" required>
                 @error('last_name')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
@@ -54,7 +54,7 @@
                     class="w-full border rounded-md px-3 py-2 bg-white
                     @error('email') border-red-500 @enderror
                     {{-- focus:outline-none focus:ring focus:ring-blue-300 --}}"
-                    value="{{ old('email')}}" placeholder="example@example.com" required>
+                    value="{{ old('email', $user->email ?? '') }}" placeholder="example@example.com" required>
             @error('email')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
@@ -69,7 +69,7 @@
                     class="w-full border rounded-md px-3 py-2 bg-white
                     @error('phone_number') border-red-500 @enderror
                     {{-- focus:outline-none focus:ring focus:ring-blue-300 --}}"
-                    value="{{ old('phone_number')}}" placeholder="09012345678">
+                    value="{{ old('phone_number', $user->phone_number ?? '') }}" placeholder="09012345678">
             @error('phone_number')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
