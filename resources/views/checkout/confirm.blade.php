@@ -104,7 +104,7 @@
                             {{-- 送信中はボタンを無効化し、見た目を変える --}}
                             :disabled="isSubmitting"
                             :class="{ 'opacity-50 cursor-not-allowed': isSubmitting }"
-                            class="w-full px-6 py-4 bg-red-600 text-white text-xl font-bold rounded-lg 
+                            class="w-full px-6 py-4 bg-red-600 text-white text-xl font-bold rounded-lg cursor-pointer
                                 hover:bg-red-700 transition duration-150 shadow-md flex justify-center items-center">
                             
                             {{-- 通常時の表示 --}}

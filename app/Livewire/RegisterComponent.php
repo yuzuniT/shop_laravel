@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterComponent extends Component
 {
@@ -36,10 +37,11 @@ class RegisterComponent extends Component
             'password' => Hash::make($this->password),
         ]);
 
+        event(new Registered($user));
+
         auth()->login($user);
 
-        return redirect()->route('products.index')
-            ->with('success', '登録が完了しました。');
+        return redirect()->route('verification.notice');
     }
 
     public function render()
