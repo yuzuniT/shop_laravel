@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('last_name_kana')->nullable();
 
             $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
             $table->char('postal_code',8)->nullable();

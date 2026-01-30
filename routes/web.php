@@ -11,6 +11,7 @@ use App\Http\Middleware\CheckCartNotEmpty;
 use App\Livewire\RegisterComponent;
 use App\Livewire\LoginComponent;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::get('/',[ProductController::class, 'index'])
     ->name('products.index');
@@ -123,3 +124,27 @@ Route::post('/logout', function (Request $request) {
 Route::get('/login-component', LoginComponent::class);
 
 Route::get('/register-component', RegisterComponent::class);
+
+// 登録時のEメール認証
+Route::prefix('email')->group(function() {
+    // 認証待ち画面
+    Route::get('/verify', function() {
+        return view('auth.verify-email');
+    })->middleware('auth')
+    ->name('verification.notice');
+
+    // メール内のリンクをクリックしたときの検証処理
+    Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+        return redirect()->route('products.index')->with('status','メール認証が完了しました！');
+    })->middleware(['auth','signed'])
+    ->name('verification.verify');
+
+    // 認証メールの再送信処理
+    Route::post('/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('status', 'verification-link-sent');
+    })->middleware(['auth','throttle:6,1'])
+    ->name('verification.send');
+
+});
