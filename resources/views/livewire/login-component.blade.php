@@ -33,4 +33,16 @@
         </a>
         をお願いします。
     </div>
+
+    <hr class="my-8 border-gray-200">
+
+    <div class="text-center text-sm text-gray-600">
+        パスワードをお忘れですか？ <br>
+        その場合は
+        <a href="{{ route('password.request') }}" class="text-blue-600 font-bold hover:underline">
+            こちらからパスワード再発行
+        </a>
+        をお願いします。
+    </div>
+
 </div>

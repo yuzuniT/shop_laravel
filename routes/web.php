@@ -10,6 +10,8 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Middleware\CheckCartNotEmpty;
 use App\Livewire\RegisterComponent;
 use App\Livewire\LoginComponent;
+use App\Livewire\Auth\ForgotPassword;
+use App\Livewire\Auth\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -148,3 +150,15 @@ Route::prefix('email')->group(function() {
     ->name('verification.send');
 
 });
+
+//メールアドレス入力画面
+Route::get('/forgot-password', function () {
+    return view('auth.forgot-password');
+})->middleware('guest')
+    ->name('password.request');
+
+// パスワード再設定画面
+Route::get('/reset-password/{token}', function (string $token) {
+    return view('auth.reset-password', ['token' => $token]);
+})->middleware('guest')
+    ->name('password.reset');
