@@ -72,6 +72,14 @@
                         ようこそ、<span class="font-bold text-blue-600">{{ Auth::user()->full_name }}</span>さん！
                     </p>
                 </div>
+
+                @if(auth()->user()->isAdmin())
+                <div class="text-xs lg:text-sm whitespace-nowrap">
+                    <a href="{{ route('admin.dashboard') }}" class="text-sm font-semibold text-blue-600 hover:underline">
+                        管理画面へ
+                    </a>
+                </div>
+                @endif
                 @endauth
 
 
