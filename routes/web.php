@@ -162,3 +162,14 @@ Route::get('/reset-password/{token}', function (string $token) {
     return view('auth.reset-password', ['token' => $token]);
 })->middleware('guest')
     ->name('password.reset');
+
+// 管理者ルート
+Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
+    Route::view('/', 'admin.dashboard')->name('admin.dashboard');
+    
+    // 商品管理
+    Route::view('/products', 'admin.products')->name('admin.products');
+
+    // ユーザー管理
+    Route::view('/users', 'admin.users')->name('admin.users');
+});

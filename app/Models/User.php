@@ -31,6 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'address',
         'phone_number',
         'is_deleted',
+        'role',
     ];
 
     /**
@@ -82,4 +83,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(DeliveryInfo::class);
     }
     */
+
+    /**
+     * Check if user is admin
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if user is regular user
+     */
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
+    }
 }
