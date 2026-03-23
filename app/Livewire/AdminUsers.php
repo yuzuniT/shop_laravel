@@ -172,4 +172,10 @@ class AdminUsers extends Component
     {
         $this->resetPage();
     }
+
+    public function updatedPage()
+    {
+        $this->showForm = false;
+        $this->resetForm();
+    }
 }

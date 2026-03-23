@@ -54,8 +54,12 @@ class AdminProducts extends Component
 
     public function render()
     {
-        $products = Product::where('product_name', 'like', "%{$this->search}%")
-            ->orWhere('id', 'like', "%{$this->search}%")
+        $products = Product::when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q->where('product_name', 'like', "%{$this->search}%")
+                      ->orWhere('id', 'like', "%{$this->search}%");
+                });
+            })
             ->paginate(10);
 
         $categories = Category::all();
@@ -157,5 +161,11 @@ class AdminProducts extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function updatedPage()
+    {
+        $this->showForm = false;
+        $this->resetForm();
     }
 }

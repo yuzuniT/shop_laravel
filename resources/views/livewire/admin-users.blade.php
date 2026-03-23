@@ -15,7 +15,7 @@
                         class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full md:w-96">
                     <button 
                         wire:click="openForm()" 
-                        class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-lg">
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-lg cursor-pointer">
                         新規ユーザー作成
                     </button>
                 </div>
@@ -40,7 +40,7 @@
                     </thead>
                     <tbody>
                         @forelse($users as $user)
-                        <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <tr wire:key="user-{{ $user->id }}" class="border-b border-gray-200 hover:bg-gray-50">
                             <td class="px-4 py-3 text-gray-800">{{ $user->family_name }} {{ $user->last_name }}</td>
                             <td class="px-4 py-3 text-gray-800">{{ $user->email }}</td>
                             <td class="px-4 py-3 text-gray-800">{{ $user->role === 'admin' ? '管理者' : '一般' }}</td>
@@ -54,13 +54,13 @@
                             <td class="px-4 py-3 text-center space-x-2">
                                 <button 
                                     wire:click="openForm('{{ $user->id }}')" 
-                                    class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded text-sm">
+                                    class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded text-sm cursor-pointer">
                                     編集
                                 </button>
 
                                 <button 
                                     wire:click="toggleDeleted('{{ $user->id }}')"
-                                    class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-3 rounded text-sm">
+                                    class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-3 rounded text-sm cursor-pointer">
                                     {{ $user->is_deleted ? '復元' : '無効化' }}
                                 </button>
                             </td>
@@ -76,7 +76,13 @@
                 </table>
             </div>
 
-            <div class="mt-6">
+            <div class="mt-6
+                [&_a]:cursor-pointer
+                [&_button]:cursor-pointer
+                [&_a:hover]:!bg-gray-100
+                [&_a:hover]:!text-gray-700
+                [&_[aria-current='page']>span]:!bg-gray-200
+                [&_[aria-current='page']>span]:!text-gray-700">
                 {{ $users->links() }}
             </div>
         </div>

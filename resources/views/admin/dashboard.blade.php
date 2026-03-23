@@ -41,7 +41,7 @@
             </a>
 
             <!-- 注文管理 -->
-            <div class="bg-white rounded-lg shadow-md p-6 opacity-50 cursor-not-allowed">
+            <a href="{{ route('admin.orders') }}" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
                 <div class="flex items-center justify-between">
                     <div>
                         <h2 class="text-xl font-bold text-gray-800">注文管理</h2>
@@ -51,9 +51,9 @@
                 </div>
                 <div class="mt-4 pt-4 border-t border-gray-200">
                     <p class="text-sm text-gray-500">{{ App\Models\Order::count() }} 件の注文</p>
-                    <p class="text-xs text-gray-400 mt-2">計画中</p>
+                    <p class="text-xs text-gray-400 mt-2">注文の詳細確認・ステータス管理</p>
                 </div>
-            </div>
+            </a>
         </div>
 
         <!-- 統計セクション -->
@@ -71,7 +71,7 @@
                 <div class="text-sm mt-2 text-purple-100">注文数</div>
             </div>
             <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg shadow-md p-6 text-white">
-                <div class="text-3xl font-bold">¥{{ number_format(App\Models\Order::sum('total_price') ?? 0) }}</div>
+                <div class="text-3xl font-bold">¥{{ number_format(App\Models\Order::sum('total_amount') ?? 0) }}</div>
                 <div class="text-sm mt-2 text-orange-100">売上合計</div>
             </div>
         </div>

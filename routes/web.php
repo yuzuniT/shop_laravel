@@ -172,4 +172,7 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
 
     // ユーザー管理
     Route::view('/users', 'admin.users')->name('admin.users');
+
+    // 注文管理
+    Route::view('/orders', 'admin.orders')->name('admin.orders');
 });

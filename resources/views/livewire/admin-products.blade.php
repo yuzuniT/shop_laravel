@@ -6,7 +6,7 @@
                 <h1 class="text-3xl font-bold text-gray-800">商品管理</h1>
                 <button 
                     wire:click="openForm()" 
-                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition cursor-pointer">
                     新規商品を追加
                 </button>
             </div>
@@ -43,9 +43,15 @@
                     </thead>
                     <tbody>
                         @forelse($products as $product)
-                            <tr class="border-b border-gray-200 hover:bg-gray-50">
+                            <tr wire:key="product-{{ $product->id }}" class="border-b border-gray-200 hover:bg-gray-50">
                                 <td class="px-4 py-3 text-gray-800">{{ $product->id }}</td>
-                                <td class="px-4 py-3 text-gray-800">{{ $product->product_name }}</td>
+                                <td class="px-4 py-3 text-gray-800 truncate max-w-lg">
+                                    <a href="{{ route('products.show', $product->id) }}" 
+                                    target="_blank"
+                                    class="text-blue-600 hover:underline">
+                                        {{ $product->product_name }}
+                                    </a>
+                                </td>
                                 <td class="px-4 py-3 text-gray-800">
                                     {{ $product->category?->category_name ?? '-' }}
                                 </td>
@@ -61,13 +67,13 @@
                                 <td class="px-4 py-3 text-center space-x-2">
                                     <button 
                                         wire:click="openForm('{{ $product->id }}')" 
-                                        class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded text-sm transition">
+                                        class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded text-sm transition cursor-pointer">
                                         編集
                                     </button>
                                     <button 
                                         wire:click="delete('{{ $product->id }}')"
                                         wire:confirm="この商品を削除してもよろしいですか？"
-                                        class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded text-sm transition">
+                                        class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded text-sm transition cursor-pointer">
                                         削除
                                     </button>
                                 </td>
@@ -84,7 +90,13 @@
             </div>
 
             <!-- ページネーション -->
-            <div class="mt-6">
+            <div class="mt-6
+                [&_a]:cursor-pointer
+                [&_button]:cursor-pointer
+                [&_a:hover]:!bg-gray-100
+                [&_a:hover]:!text-gray-700
+                [&_[aria-current='page']>span]:!bg-gray-200
+                [&_[aria-current='page']>span]:!text-gray-700">
                 {{ $products->links() }}
             </div>
         </div>
