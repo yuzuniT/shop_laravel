@@ -11,7 +11,6 @@
 
 > ⚠️ デプロイについて  
 > ngrokを使用して一時的な外部公開URLを生成し、ローカル環境から外部アクセスできることを確認しています。  
-> 常時公開のデプロイは現在対応中です。
 
 🔐 **テストアカウント**:  
 - メール: `exam@example.com`  
@@ -87,80 +86,10 @@ PHP・Laravelともに未経験の状態からスタートしました。
 ![画面遷移図](https://github.com/user-attachments/assets/eaf99552-bd6a-41ed-aafd-10c6b18cd4e4)
 
 ### ER図 / テーブル定義書
-📄 [テーブル定義書（Google Sheets）](https://docs.google.com/spreadsheets/d/101n_6tjtNjLqDq1EUwKNTWGXp0tCrQ43mKaziv_Dh7k/)
+📄 [テーブル定義書（Google スプレッドシート）](https://docs.google.com/spreadsheets/d/101n_6tjtNjLqDq1EUwKNTWGXp0tCrQ43mKaziv_Dh7k/)
 
 ### テスト仕様書
-📄 [テスト仕様書（Google Sheets）](https://docs.google.com/spreadsheets/d/11X4_Hsr9IE6ipQLv1BW6WoUgGWmN8Gpaqcm-onyXw-o/)
-
----
-
-## 🚀 ローカル環境でのセットアップ
-
-### 必要な環境
-- [Laravel Herd](https://herd.laravel.com/) がインストールされていること
-- PHP 8.2以上
-
-### 手順
-
-**1. リポジトリをクローン**
-```bash
-git clone https://github.com/yuzuniT/shop_app3.git
-```
-HerdのサイトディレクトリにクローンするとURL (`http://shop-app3.test`) が自動で割り当てられます。
-
-**2. 依存パッケージをインストール**
-```bash
-composer install
-npm install
-```
-
-**3. 環境ファイルを作成**
-```bash
-cp .env.example .env
-php artisan key:generate
-```
-
-**4. データベースのセットアップ**
-```bash
-touch database/database.sqlite
-php artisan migrate --seed
-```
-> `--seed` オプションでカテゴリ・商品の初期データが自動で挿入されます。
-
-**5. アセットをビルド**
-```bash
-npm run dev
-```
-
-**6. ブラウザでアクセス**
-```
-http://shop-app3.test
-```
-
----
-
-### メール機能について
-デフォルトでは送信メールはログファイルに出力されます。
-実際のメール送信を確認したい場合は `.env` の `MAIL_MAILER` を変更してください。
-```env
-# ログに出力（デフォルト）
-MAIL_MAILER=log
-
-# Mailtrapなどのテスト用SMTPを使う場合
-MAIL_MAILER=smtp
-MAIL_HOST=smtp.mailtrap.io
-MAIL_PORT=2525
-MAIL_USERNAME=your_username
-MAIL_PASSWORD=your_password
-```
-
----
-
-## 💡 工夫した点
-
-- **Issue駆動開発を実践**: 一人開発でもGitHubのIssueとPull Requestを活用し、実務に近い開発フローを意識しました
-- **メール送信機能**: XAMPPのローカル環境でもMailHogを使ってメール送受信のテストができるよう環境構築しました
-- **テスト設計書の作成**: PHPUnitによる自動テストに加え、手動テストの仕様書も作成し、品質担保を意識しました
+📄 [テスト仕様書（Google スプレッドシート）](https://docs.google.com/spreadsheets/d/11X4_Hsr9IE6ipQLv1BW6WoUgGWmN8Gpaqcm-onyXw-o/)
 
 ---
 
@@ -198,7 +127,6 @@ GitHubのIssue機能をTodoリストとして活用する開発フローを取�
 
 - [ ] 管理者機能（商品・注文の登録・編集・削除）
 - [ ] 注文履歴確認機能
-- [ ] 常時デプロイ環境の構築
 
 ---
 
