@@ -18,6 +18,15 @@
 
 ---
 
+## 🖼️ 画面スクリーンショット
+
+| 商品一覧 | カート |
+|---|---|
+| ![商品一覧](docs/screenshots/01_product_list.png) | ![カート](docs/screenshots/02_cart.png) |
+
+| 注文内容確認 | ログイン |
+|---|---|
+| ![注文確認](docs/screenshots/03_order_confirm.png) | ![ログイン](docs/screenshots/04_login.png) |
 ## 🎯 作成背景・目的
 
 PHP学習の一環として、最初にフレームワークを使わないPHP素書きでECサイトを作成しました。
@@ -83,7 +92,7 @@ PHP・Laravelともに未経験の状態からスタートしました。
 ## 📐 設計ドキュメント
 
 ### 画面遷移図
-![画面遷移図](https://github.com/user-attachments/assets/eaf99552-bd6a-41ed-aafd-10c6b18cd4e4)
+![画面遷移図](docs/screen_transition.png)
 
 ### ER図 / テーブル定義書
 📄 [テーブル定義書（Google スプレッドシート）](https://docs.google.com/spreadsheets/d/101n_6tjtNjLqDq1EUwKNTWGXp0tCrQ43mKaziv_Dh7k/)
