@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d1250beb592fc8bd21053221a765091",
+    "content-hash": "c69ed736c66667776fbd075d0b7075e1",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2330,16 +2330,16 @@
         },
         {
             "name": "livewire/volt",
-            "version": "v1.10.0",
+            "version": "v1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/volt.git",
-                "reference": "79a5e2367944aad6f4af9edef31a3d688cc8875c"
+                "reference": "48cff133990c6261c63ee279fc091af6f6c6654e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/volt/zipball/79a5e2367944aad6f4af9edef31a3d688cc8875c",
-                "reference": "79a5e2367944aad6f4af9edef31a3d688cc8875c",
+                "url": "https://api.github.com/repos/livewire/volt/zipball/48cff133990c6261c63ee279fc091af6f6c6654e",
+                "reference": "48cff133990c6261c63ee279fc091af6f6c6654e",
                 "shasum": ""
             },
             "require": {
@@ -2349,9 +2349,8 @@
             },
             "require-dev": {
                 "laravel/folio": "^1.1",
-                "mockery/mockery": "^1.6",
-                "orchestra/testbench": "^8.15.0|^9.0|^10.0",
-                "pestphp/pest": "^2.9.5|^3.0",
+                "orchestra/testbench": "^8.36|^9.15|^10.8",
+                "pestphp/pest": "^2.9.5|^3.0|^4.0",
                 "phpstan/phpstan": "^1.10"
             },
             "type": "library",
@@ -2398,7 +2397,7 @@
                 "issues": "https://github.com/livewire/volt/issues",
                 "source": "https://github.com/livewire/volt"
             },
-            "time": "2025-11-14T15:10:57+00:00"
+            "time": "2025-11-25T16:19:15+00:00"
         },
         {
             "name": "monolog/monolog",

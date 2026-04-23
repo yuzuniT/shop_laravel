@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
-use Laravel\Fortify\TwoFactorAuthenticatable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,9 +21,17 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'family_name',
+        'last_name',
+        'family_name_kana',
+        'last_name_kana',
         'email',
         'password',
+        'postal_code',
+        'address',
+        'phone_number',
+        'is_deleted',
+        'role',
     ];
 
     /**
@@ -32,8 +41,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'two_factor_secret',
-        'two_factor_recovery_codes',
         'remember_token',
     ];
 
@@ -45,7 +52,6 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
@@ -55,10 +61,42 @@ class User extends Authenticatable
      */
     public function initials(): string
     {
-        return Str::of($this->name)
-            ->explode(' ')
-            ->take(2)
-            ->map(fn ($word) => Str::substr($word, 0, 1))
-            ->implode('');
+        return Str::substr($this->family_name, 0, 1)
+             . Str::substr($this->last_name, 0, 1);
+    }
+
+    public function fullName(): Attribute
+    {
+        return Attribute::get(
+            fn () => ($this->family_name ?? '') . ' ' . ($this->last_name ?? ''),
+        );
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /*
+    public function deliveryInfos()
+    {
+        return $this->hasMany(DeliveryInfo::class);
+    }
+    */
+
+    /**
+     * Check if user is admin
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if user is regular user
+     */
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
     }
 }

@@ -1,52 +1,29 @@
-<x-layouts.auth>
-    <div class="flex flex-col gap-6">
-        <x-auth-header :title="__('Reset password')" :description="__('Please enter your new password below')" />
+<div class="px-8 py-6">
+    <h1 class="text-2xl font-bold mb-7">新しいパスワードの設定</h1>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="text-center" :status="session('status')" />
+    <form wire:submit="resetPassword" class="space-y-5">
 
-        <form method="POST" action="{{ route('password.update') }}" class="flex flex-col gap-6">
-            @csrf
-            <!-- Token -->
-            <input type="hidden" name="token" value="{{ request()->route('token') }}">
+        <div>
+            <label class="block">メールアドレス</label>
+            <input type="email" wire:model="email" class="border-2 w-full p-2 bg-gray-100" readonly>
+            @error('email')<p class="text-red-600 text-sm">{{ $message }}</p>@enderror
+        </div>
 
-            <!-- Email Address -->
-            <flux:input
-                name="email"
-                value="{{ request('email') }}"
-                :label="__('Email')"
-                type="email"
-                required
-                autocomplete="email"
-            />
+        <div>
+            <label class="block">新しいパスワード</label>
+            <input type="password" wire:model="password" class="border-2 w-full p-2 bg-white">
+            @error('password')<p class="text-red-600 text-sm">{{ $message }}</p>@enderror
+        </div>
 
-            <!-- Password -->
-            <flux:input
-                name="password"
-                :label="__('Password')"
-                type="password"
-                required
-                autocomplete="new-password"
-                :placeholder="__('Password')"
-                viewable
-            />
+        <div>
+            <label class="block">パスワード（確認）</label>
+            <input type="password" wire:model="password_confirmation" class="border-2 w-full p-2 bg-white">
+        </div>
 
-            <!-- Confirm Password -->
-            <flux:input
-                name="password_confirmation"
-                :label="__('Confirm password')"
-                type="password"
-                required
-                autocomplete="new-password"
-                :placeholder="__('Confirm password')"
-                viewable
-            />
-
-            <div class="flex items-center justify-end">
-                <flux:button type="submit" variant="primary" class="w-full" data-test="reset-password-button">
-                    {{ __('Reset password') }}
-                </flux:button>
-            </div>
-        </form>
-    </div>
-</x-layouts.auth>
+        <div class="flex justify-end">
+            <button class="bg-green-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-green-700">
+                パスワードを更新する
+            </button>
+        </div>
+    </form>
+</div>
