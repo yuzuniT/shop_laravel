@@ -11,28 +11,29 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contacts', function (Blueprint $table) {
-            $table->increments('id'); // int (bigint→int)
+        Schema::create('orders', function (Blueprint $table) {
+            $table->increments('id'); // int (SQLite変換元に合わせ bigint→int)
 
-            $table->unsignedInteger('user_id')->nullable(); // int (unsignedBigInteger→unsignedInteger)
+            $table->unsignedInteger('user_id')->nullable(); // int (usersテーブルのidに合わせる)
 
-            $table->string('family_name'); // varchar(255) ✓ 変更なし
-            $table->string('last_name');   // varchar(255) ✓ 変更なし
-            $table->string('email');       // varchar(255) ✓ 変更なし
-            $table->string('phone_number')->nullable(); // varchar(255) (string(15)→string())
+            $table->text('family_name');
+            $table->text('last_name');
+            $table->text('postal_code');
+            $table->text('address');
+            $table->text('phone_number')->nullable();
+            $table->text('email');
 
-            $table->string('contact_type');  // varchar(255) (string(50)→string())
-            $table->string('contact_title'); // varchar(255) ✓ 変更なし
-            $table->text('message');
+            $table->bigInteger('shipping_fee')->default(610); // 送料は610円で統一する。整数管理(円単位)
+            $table->bigInteger('total_amount');               // 同上
+            $table->string('payment_method'); // text→string: text型はDEFAULT値不可のためvarcharに変更
+            $table->string('order_status')->default('pending'); // 同上
 
-            $table->string('status')->default('pending'); // varchar(255) (string(20)→string())
-
-            $table->dateTime('created_at')->nullable(); // timestamps()→datetime個別定義
+            $table->dateTime('created_at')->nullable(); // timestampsではなくdatetimeで個別定義
             $table->dateTime('updated_at')->nullable();
 
-            $table->foreign('user_id', 'contacts_FK_0_0')
+            $table->foreign('user_id', 'orders_FK_0_0')
                 ->references('id')->on('users')
-                ->nullOnDelete(); // ユーザーIDが削除されたとき、お問い合わせ情報はnullとなる
+                ->nullOnDelete(); // ユーザーIDが削除された時、注文テーブル内ではnullとなる
         });
     }
 
@@ -41,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('orders');
     }
 };
