@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // 'admin' または 'user' のロール
-            $table->enum('role', ['admin', 'user'])->default('user')->after('is_deleted');
+            // enum→string: SQLダンプでは varchar(255) DEFAULT 'user' のため enum は使用しない
+            $table->string('role')->default('user')->after('is_deleted');
         });
     }
 
