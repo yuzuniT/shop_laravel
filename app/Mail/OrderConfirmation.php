@@ -32,7 +32,7 @@ class OrderConfirmation extends Mailable
     {
         return new Envelope(
             subject: '【Sound Space】ご注文ありがとうございます（注文番号：'. $this->order->id . '）',
-            from: new Address(env('MAIL_FROM_ADDRESS'), 'Sound Space'),
+            from: new Address(config('mail.from.address'), 'Sound Space'),
         );
     }
 

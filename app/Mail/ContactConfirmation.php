@@ -32,7 +32,7 @@ class ContactConfirmation extends Mailable
     {
         return new Envelope(
             subject: '【Sound Space】お問い合わせありがとうございます（お問い合わせ番号：'. $this->contact->id . '）',
-            from: new Address(env('MAIL_FROM_ADDRESS'), 'Sound Space'),
+            from: new Address(config(mail.from.address), 'Sound Space'),
         );
     }
 
