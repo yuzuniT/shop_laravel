@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
+    use HasFactory;
     protected $primaryKey='id';
     public $incrementing=false; // AUTO_INCREMENTを外す
     protected $keyType='string'; // 主キーはstring型（デフォルトはINT型）

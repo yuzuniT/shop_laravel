@@ -12,8 +12,10 @@ class ProductController extends Controller
         $keyword = $request->input('search');
 
         $products=Product::query()
-            ->search($keyword) // スコープ適用
-            ->orderBy('id','desc')
+            ->where('stock_quantity', '>', 0)
+            ->where('is_active', true)
+            ->search($keyword)
+            ->orderBy('id','desc') // id降順
             ->paginate(12) // 1ページあたり12件表示
             ->withQueryString(); // ページネーションに検索条件を保持
 
