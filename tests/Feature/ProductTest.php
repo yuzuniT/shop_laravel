@@ -196,7 +196,7 @@ class ProductTest extends TestsTestCase
 
     /**
      * TC_PROD_12
-     * category_idがnullの商品が商品一覧に正常に表示されること
+     * カテゴリ未設定の商品が商品一覧に正常に表示されること
      */
     public function test_カテゴリ未設定の商品が商品一覧に正常に表示されること(): void
     {
@@ -210,7 +210,7 @@ class ProductTest extends TestsTestCase
 
     /**
      * TC_PROD_13
-     * category_idがnullの商品の詳細ページが正常に表示されること
+     * カテゴリ未設定商品の詳細ページが正常に表示されること
      */
     public function test_カテゴリ未設定商品の詳細ページが正常に表示されること(): void
     {

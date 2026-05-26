@@ -18,7 +18,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'id'=>Str::ulid(), // string型の主キー
+            'id'=>(string)Str::ulid(), // string型の主キー
             'category_id'=>null,
             'product_name'=>fake()->name(),
             'description'=>fake()->realText(100),

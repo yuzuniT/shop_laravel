@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Services\CartService;
+use App\Http\Requests\Cart\AddCartRequest;
+use App\Http\Requests\Cart\UpdateCartRequest;
+use App\Http\Requests\Cart\DeleteCartRequest;
 
 class CartController extends Controller
 {
@@ -24,11 +26,9 @@ class CartController extends Controller
         return view('cart.empty');
     }
 
-    public function add(Request $request)
+    public function add(AddCartRequest $request)
     {
         $product_id=$request->product_id;
-        $quantity=max((int)$request->quantity,1); // 数量として不正な値が渡された時に最低値1を保証する
-
         $product=Product::findOrFail($product_id);
 
         // 現在のカート情報取得
@@ -36,14 +36,14 @@ class CartController extends Controller
 
         // カートに商品がすでにある場合は数量を加算
         if (isset($cart[$product_id])) {
-            $cart[$product_id]['quantity'] += $quantity;
+            $cart[$product_id]['quantity'] += $request->quantity;
         } else {
             // カートに商品がない場合
             $cart[$product_id] = [
                 'product_id'=>$product->id,
                 'product_name'=>$product->product_name,
                 'price'=>$product->base_price,
-                'quantity'=>$quantity,
+                'quantity'=>$request->quantity,
                 'image_url'=>$product->image_url,
                 'stock_quantity'=>$product->stock_quantity,
             ];
@@ -55,18 +55,16 @@ class CartController extends Controller
         return redirect()->route('cart.index');
     }
 
-    public function update(Request $request)
+    public function update(UpdateCartRequest $request)
     {
         $product_id=$request->product_id;
-        $new_quantity=max((int)$request->quantity,1);
 
         // 現在のカート情報取得
         $cart=session()->get('cart',[]);
 
         // カートに商品があるか確認して更新
         if (isset($cart[$product_id])){
-            $max=$cart[$product_id]['stock_quantity'];
-            $cart[$product_id]['quantity'] = min($new_quantity, $max); // 在庫より大きい数はセットできない
+            $cart[$product_id]['quantity'] = $request->quantity;
         }
 
         // セッションに保存
@@ -75,7 +73,7 @@ class CartController extends Controller
         return redirect()->route('cart.index');
     }
 
-    public function delete(Request $request)
+    public function delete(DeleteCartRequest $request)
     {
         $product_id=$request->product_id;
 
