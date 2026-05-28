@@ -21,11 +21,19 @@ class ProductTest extends TestsTestCase
      */
     public function test_未ログインで商品一覧が正しく表示されること(): void
     {
-        Product::factory()->count(3)->create();
+        Product::factory()->create([
+        'product_name'   => 'テスト商品',
+        'description'    => 'テスト説明文',
+        'base_price'     => 1000,
+        'stock_quantity' => 10,
+        'is_active'      => true,
+        ]);
 
-        $response = $this->get('/');
+        $response = $this->get(route('products.index'));
 
         $response->assertStatus(200);
+        $response->assertSee('テスト商品');
+        $response->assertSee('1,000');
     }
 
      /**
@@ -35,11 +43,19 @@ class ProductTest extends TestsTestCase
     public function test_ログイン済みユーザーでも商品一覧が正しく表示されること(): void
     {
         $user = User::factory()->create();
-        Product::factory()->count(3)->create();
+        Product::factory()->create([
+        'product_name'   => 'テスト商品',
+        'description'    => 'テスト説明文',
+        'base_price'     => 1000,
+        'stock_quantity' => 10,
+        'is_active'      => true,
+        ]);
 
-        $response = $this->actingAs($user)->get('/');
+        $response = $this->actingAs($user)->get(route('products.index'));
 
         $response->assertStatus(200);
+        $response->assertSee('テスト商品');
+        $response->assertSee('1,000');
     }
 
     // =========================================================
@@ -202,7 +218,7 @@ class ProductTest extends TestsTestCase
     {
         Product::factory()->create(['product_name'=>'カテゴリなし商品']);
 
-        $response=$this->get('/');
+        $response=$this->get(route('products.index'));
 
         $response->assertStatus(200);
         $response->assertSee('カテゴリなし商品');

@@ -7,11 +7,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Middleware\CheckCartNotEmpty;
 use App\Livewire\RegisterComponent;
 use App\Livewire\LoginComponent;
-use App\Livewire\Auth\ForgotPassword;
-use App\Livewire\Auth\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
