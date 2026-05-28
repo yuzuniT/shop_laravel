@@ -22,7 +22,8 @@ class CheckCartNotEmpty
 
         // カートが空（または存在しない）場合
         if(empty($cart)){
-            return redirect()->route('cart.empty'); // cart.empty　ルートへ
+            return redirect()->route('cart.empty') // カートが空のときリダイレクト
+                ->with('error', 'カートに商品が入っていません。'); 
         }
 
         return $next($request); // カートに商品があれば次へ

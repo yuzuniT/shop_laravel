@@ -55,7 +55,11 @@ class CheckoutController extends Controller
         $cart=session()->get('cart',[]);
         $checkoutData=session()->get('checkout_data',[]);
 
-        if (empty($cart) || empty($checkoutData)) {
+        if (empty($cart)) {
+            return redirect()->route('cart.empty')
+                ->with('error', 'カートに商品が入っていません。');
+        }        
+        if (empty($checkoutData)) {
             return redirect()->route('cart.index')
                 ->with('error','注文情報が不足しています。');
         }
@@ -98,7 +102,11 @@ class CheckoutController extends Controller
 
                 // 在庫を減らす
                 $product->decrement('stock_quantity', $item['quantity']);                
-                
+      
+                // 在庫が0になった場合、非公開にする
+                if ($product->fresh()->stock_quantity === 0) {
+                    $product->update(['is_active' => false]);
+                }            
             }
 
                 // 注文完了後の処理

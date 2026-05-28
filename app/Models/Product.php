@@ -11,6 +11,17 @@ class Product extends Model
     protected $primaryKey='id';
     public $incrementing=false; // AUTO_INCREMENTを外す
     protected $keyType='string'; // 主キーはstring型（デフォルトはINT型）
+
+    protected $fillable=[
+        'id',
+        'category_id',
+        'product_name',
+        'description',
+        'base_price',
+        'stock_quantity',
+        'is_active',
+    ];
+    
     public function category()
     {
         return $this->belongsTo(Category::class);

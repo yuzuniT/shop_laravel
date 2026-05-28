@@ -23,7 +23,7 @@ class ProductFactory extends Factory
             'product_name'=>fake()->name(),
             'description'=>fake()->realText(100),
             'base_price'=>fake()->numberBetween(500,10000),
-            'stock_quantity'=>fake()->numberBetween(1,100),
+            'stock_quantity'=>fake()->numberBetween(2,100),
             'is_active'=>true,
         ];
     }
