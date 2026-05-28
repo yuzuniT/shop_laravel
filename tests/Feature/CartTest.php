@@ -195,7 +195,7 @@ class CartTest extends TestCase
             ->get('/cart')
             ->assertStatus(200)
             ->assertSee('テスト商品')
-            ->assertSee('1,000');  
+            ->assertSee('¥1,000');
     }
 
     /**
@@ -272,7 +272,9 @@ class CartTest extends TestCase
         $this->withSession($session)
             ->get('/cart')
             ->assertStatus(200)
-            ->assertSee('2,000');
+            ->assertSee('¥2,000') // 小計：1000円 × 2個
+            ->assertSee('¥610') // 送料：610円
+            ->assertSee('¥2,610'); // 合計：小計 + 送料
 
     }
 
