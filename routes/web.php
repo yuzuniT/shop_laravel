@@ -89,7 +89,7 @@ Route::prefix('contact')->group(function() {
 Route::get('/', [ContactController::class,'create'])
     ->name('contact.create');
 
-Route::post('/',[ContactController::class, 'store'])
+Route::post('/store',[ContactController::class, 'store'])
     ->name('contact.store');
 
 Route::post('/confirm',[ContactController::class, 'confirm'])

@@ -119,8 +119,12 @@ class OrderTest extends TestCase
 
         $response->assertRedirect();
         $response->assertSessionHasErrors([
-            'family_name', 'last_name', 'postal_code',
-            'address', 'email', 'payment_method',
+            'family_name' => 'The family name field is required.',
+            'last_name'   => 'The last name field is required.',
+            'postal_code' => 'The postal code field is required.',
+            'address'     => 'The address field is required.',
+            'email'       => 'The email field is required.',
+            'payment_method' => 'The payment method field is required.',
         ]);
     }
 
@@ -128,24 +132,27 @@ class OrderTest extends TestCase
      * TC_ORDER_04
      * 各必須項目を個別に空にした場合、そのフィールドのバリデーションエラーが返ること
      */
-    public function 各必須項目を個別に空にした場合バリデーションエラーが返ること(): void
+    public function test_各必須項目を個別に空にした場合バリデーションエラーが返ること(): void
     {
         $product = Product::factory()->create();
 
         $requiredFields = [
-            'family_name', 'last_name', 'postal_code',
-            'address', 'email', 'payment_method',
+            'family_name' => 'The family name field is required.',
+            'last_name'   => 'The last name field is required.',
+            'postal_code' => 'The postal code field is required.',
+            'address'     => 'The address field is required.',
+            'email'       => 'The email field is required.',
+            'payment_method' => 'The payment method field is required.',
         ];
 
-        foreach ($requiredFields as $field) {
-            $data = $this->validDeliveryData();
-            $data[$field] = '';
+        foreach ($requiredFields as $field => $rule) {
+            $data = array_merge($this->validDeliveryData(), [$field => null]);
 
             $response = $this->withSession($this->makeCartSession($product, 1))
                 ->post('/checkout/confirm', $data);
 
             $response->assertRedirect();
-            $response->assertSessionHasErrors([$field]);
+            $response->assertSessionHasErrors([$field => $rule]);
         }
     }
 
@@ -164,7 +171,7 @@ class OrderTest extends TestCase
             ->post('/checkout/confirm', $data);
         
         $response->assertRedirect();
-        $response->assertSessionHasErrors(['email']);
+        $response->assertSessionHasErrors(['email' => 'The email field must be a valid email address.']);
     }
 
     // =========================================================
