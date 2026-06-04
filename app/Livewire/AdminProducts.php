@@ -22,7 +22,7 @@ class AdminProducts extends Component
         'description' => '',
         'base_price' => '',
         'stock_quantity' => '',
-        'category_id' => '',
+        'category_id' => null, // nullableかつ整数型なので初期値null
         'is_active' => true,
     ];
 
@@ -35,7 +35,7 @@ class AdminProducts extends Component
             'form.id' => [
                 'required',
                 'string',
-                'max:10',
+                'max:36',
                 Rule::unique('products', 'id')->ignore($this->editingId, 'id')
             ],
             'form.product_name' => 'required|string|max:255',
@@ -109,31 +109,32 @@ class AdminProducts extends Component
             'description' => '',
             'base_price' => '',
             'stock_quantity' => '',
-            'category_id' => '',
+            'category_id' => null, // nullableかつ整数型なので初期値null
             'is_active' => true,
         ];
     }
 
     public function save()
     {
-        $this->validate();
+        $validated = $this->validate();
+        $data = $validated['form'];
+
+        // 空文字（""）を null に変換する（SQLエラー対策）
+        foreach ($data as $key => $value) {
+            if ($value === '') {
+                $data[$key] = null;
+            }
+        }
 
         try {
             if ($this->editingId) {
                 // 更新
                 $product = Product::findOrFail($this->editingId);
-                $product->update([
-                    'product_name' => $this->form['product_name'],
-                    'description' => $this->form['description'],
-                    'base_price' => $this->form['base_price'],
-                    'stock_quantity' => $this->form['stock_quantity'],
-                    'category_id' => $this->form['category_id'],
-                    'is_active' => $this->form['is_active'],
-                ]);
+                $product->update($data);
                 $this->message = '商品を更新しました。';
             } else {
                 // 作成
-                Product::create($this->form);
+                Product::create($data);
                 $this->message = '商品を作成しました。';
             }
             $this->messageType = 'success';
